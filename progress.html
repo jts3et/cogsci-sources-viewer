@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corpus build — progress</title>
+<style>
+ :root{--bg:#0f0b1e;--card:#1b1430;--line:#3a2d63;--ink:#ece8f7;--dim:#b3a8d6;--accent:#7c5cff;--accent2:#19c37d;--bar:#241a44}
+ *{box-sizing:border-box} html,body{margin:0;height:100%}
+ body{background:radial-gradient(1200px 600px at 50% -10%,#241a44,#0f0b1e);color:var(--ink);
+   font:15px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px}
+ .card{width:min(760px,94vw);background:var(--card);border:1px solid var(--line);border-radius:18px;
+   padding:28px 30px;box-shadow:0 18px 60px rgba(0,0,0,.5)}
+ h1{margin:0 0 4px;font-size:21px;letter-spacing:.2px}
+ .sub{color:var(--dim);font-size:13.5px;margin-bottom:22px}
+ .big{font-size:54px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+ .big small{font-size:18px;color:var(--dim);font-weight:500}
+ .bar{height:18px;border-radius:10px;background:var(--bar);border:1px solid var(--line);overflow:hidden;margin:16px 0 6px}
+ .bar > i{display:block;height:100%;width:0%;border-radius:10px;
+   background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .8s ease}
+ .pct{display:flex;justify-content:space-between;color:var(--dim);font-size:12.5px;font-variant-numeric:tabular-nums}
+ .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+ .stat{background:#15102a;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+ .stat .n{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+ .stat .l{color:var(--dim);font-size:12px;margin-top:2px}
+ .foot{margin-top:20px;display:flex;justify-content:space-between;align-items:center;color:var(--dim);font-size:12px}
+ .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);display:inline-block;margin-right:6px;animation:p 1.6s infinite}
+ @keyframes p{0%,100%{opacity:.35}50%{opacity:1}}
+ .err{color:#ff9a8a}
+</style></head>
+<body>
+<div class="card">
+  <h1>Cognitive-science corpus — build</h1>
+  <div class="sub">Open-access downloads are intaken server-side; this reads the live count from Supabase and refreshes every 15s.</div>
+  <div class="big"><span id="new">—</span> <small>new docs downloaded</small></div>
+  <div class="bar"><i id="fill"></i></div>
+  <div class="pct"><span id="pctL">0%</span><span id="target">target ~2,200</span></div>
+  <div class="grid">
+    <div class="stat"><div class="n" id="corpus">—</div><div class="l">full corpus (all 4 categories)</div></div>
+    <div class="stat"><div class="n" id="base">268</div><div class="l">tonight's starting set</div></div>
+    <div class="stat"><div class="n" id="rate">—</div><div class="l">docs / min (recent)</div></div>
+  </div>
+  <div class="foot"><span><span class="dot"></span><span id="status">connecting…</span></span><span id="ago"></span></div>
+</div>
+<script>
+const URL_='https://zknmvifnbrycjwckkggy.supabase.co';
+const ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inprbm12aWZuYnJ5Y2p3Y2trZ2d5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk3MDIzNzksImV4cCI6MjA4NTI3ODM3OX0.V0zYcLjJTm41ZH4ILydjfGTfb9xksPJix7KPsKmLkwI';
+const CATS=['Cognitive Science','Tai Chi & Embodied Cognition','Tacit Knowledge','Cognitive Science (expanded)'];
+const TARGET=2200;
+let last=null, lastT=null;
+async function count(cat){
+  const u=URL_+"/rest/v1/journal_articles?select=file_name&category=eq."+encodeURIComponent(cat);
+  const r=await fetch(u,{headers:{apikey:ANON,Authorization:'Bearer '+ANON,Prefer:'count=exact','Range-Unit':'items',Range:'0-0'}});
+  const cr=r.headers.get('content-range')||'/0'; return parseInt(cr.split('/')[1]||'0',10);
+}
+async function tick(){
+  try{
+    const counts=await Promise.all(CATS.map(count));
+    const expanded=counts[3]||0;
+    const corpus=counts.reduce((a,b)=>a+b,0);
+    document.getElementById('new').textContent=expanded.toLocaleString();
+    document.getElementById('corpus').textContent=corpus.toLocaleString();
+    const pct=Math.min(100,Math.round(expanded/TARGET*100));
+    document.getElementById('fill').style.width=pct+'%';
+    document.getElementById('pctL').textContent=pct+'%';
+    const now=Date.now();
+    if(last!=null && now>lastT){ const rate=(expanded-last)/((now-lastT)/60000); document.getElementById('rate').textContent=rate>0?rate.toFixed(1):'0.0'; }
+    last=expanded; lastT=now;
+    document.getElementById('status').textContent='live · '+expanded.toLocaleString()+' downloaded';
+    document.getElementById('ago').textContent='updated '+new Date().toLocaleTimeString();
+  }catch(e){ document.getElementById('status').innerHTML='<span class="err">read error — retrying ('+e.message+')</span>'; }
+}
+tick(); setInterval(tick,15000);
+</script>
+</body></html>

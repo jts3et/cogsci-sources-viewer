@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How the topic map was made — Methodology</title>
+<style>
+ :root{--bg:#f7f5f0;--panel:#fffdf8;--ink:#222019;--muted:#6b655a;--line:#e3ddd0;--accent:#7a5c3e}
+ *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.62 "Iowan Old Style",Palatino,Georgia,serif}
+ a{color:var(--accent)}
+ .top{position:sticky;top:0;background:var(--panel);border-bottom:1px solid var(--line);padding:11px 22px;display:flex;gap:11px;flex-wrap:wrap;z-index:5}
+ .btn{font:inherit;font-size:13.5px;padding:7px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--accent);text-decoration:none}
+ .btn:hover{border-color:var(--accent)}
+ .wrap{max-width:800px;margin:0 auto;padding:30px 24px 90px}
+ h1{font-size:28px;line-height:1.25;margin:4px 0 6px}
+ .lead{color:var(--muted);margin:0 0 24px;font-size:15px}
+ h2{font-size:19px;margin:32px 0 9px}
+ p{margin:0 0 14px} em{color:var(--muted)}
+ ol.steps{counter-reset:s;list-style:none;padding:0;margin:0 0 18px}
+ ol.steps>li{position:relative;padding:2px 0 14px 46px;margin:0}
+ ol.steps>li:before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;
+   border-radius:50%;background:var(--accent);color:#fff;font:700 15px/30px "Iowan Old Style",Georgia,serif;text-align:center}
+ ol.steps>li b{display:block;margin-bottom:2px}
+ .card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 19px;margin:0 0 18px}
+ .card h3{margin:0 0 6px;font-size:14px;letter-spacing:.4px;text-transform:uppercase;color:var(--accent)}
+ .k{display:inline-block;background:#efece4;border-radius:5px;padding:0 6px;font-weight:700}
+ ul{margin:0 0 14px;padding-left:1.25em} li{margin:0 0 7px}
+ .note{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:26px}
+ @media print{.top{display:none}}
+</style></head><body>
+<div class="top">
+  <a class="btn" href="./datm.html">← Topic map</a>
+  <a class="btn" href="./analogy-taichi-list.html">Reading list ↗</a>
+  <a class="btn" href="./dossier.html">Bridge dossier ↗</a>
+  <a class="btn" href="./index.html">PDF library ↗</a>
+</div>
+<div class="wrap">
+<h1>How the topic map was made</h1>
+<p class="lead">A plain-language guide to the method behind the atoms — what a Discourse Atom Topic Model is, and how to read what it found.</p>
+
+<h2>What it is, in one breath</h2>
+<p>The topic map is not a filing system we imposed. It is a picture of what the whole collection of papers turns out to be <em>about</em>, produced by letting a computer read every paper and find the patterns of meaning they keep returning to. The recurring patterns it finds are called <b>atoms</b>. Each atom is a theme the collection organizes itself around, discovered rather than assigned.</p>
+
+<h2>How it works</h2>
+<ol class="steps">
+  <li><b>It learns a private vocabulary from these papers alone.</b> The computer reads the entire collection and learns, from this corpus and nothing else, which words keep company with which. The result is a "meaning space" specific to <em>these</em> papers, so <em>mapping</em>, <em>form</em>, or <em>ground</em> mean what they mean here, not what a general dictionary would say.</li>
+  <li><b>It reads each paper in small overlapping windows.</b> A short window slides across every document, and for each stretch of text the model computes its gist — roughly, the average meaning of the words in that window, with common filler words down-weighted so the theme shows through.</li>
+  <li><b>It factors all those gists into a handful of recurring directions.</b> Across the whole collection, the model finds a small set of themes — the atoms — such that almost every passage can be described as a blend of just a few of them. This is the step that makes it discovery rather than sorting: nobody supplies the themes in advance.</li>
+  <li><b>It measures how much of each paper sits on each atom.</b> For every document, the model counts what fraction of its passages fall closest to each atom. That fraction is the paper's <em>loading</em>. A paper loading heavily on one atom is a strong example of that theme; the papers loading heaviest are how you read the atom.</li>
+</ol>
+
+<div class="card">
+  <h3>Why not just tag papers by field?</h3>
+  <p>Because the atoms are free to cut across our human labels. An atom whose heaviest papers come from <em>both</em> the analogy literature and the tai-chi / embodiment literature reveals a connection that our filing into categories would never surface. Those are the <b>bridge atoms</b>, and finding them is the whole point of this corpus.</p>
+</div>
+
+<h2>How to read an atom</h2>
+<p>Read the <b>documents</b>, not the word list. Each atom comes with a set of top words, but those can be misleading — sometimes they are author surnames, citation fragments, or technical debris. The reliable way to know what an atom is about is to open the handful of documents that load most heavily on it and ask what they share. The atom is that shared gist. On the topic map, every atom card lists its top-loading documents, and each one links straight to its PDF.</p>
+
+<h2>Why sixteen atoms</h2>
+<p>The number of atoms, written <span class="k">K</span>, is a choice, and the wrong choice hides structure. Too few atoms and distinct themes get mashed together; too many and the model splinters one theme into near-duplicates. We ran the model at several values of <span class="k">K</span> and kept the one that best balanced two qualities: each atom being internally <b>coherent</b> (its heaviest words and documents genuinely hang together) and the atoms being <b>distinct</b> from one another. For this curated set of 268 papers, sixteen was the balance point.</p>
+
+<h2>What it can and cannot do</h2>
+<ul>
+  <li>It <b>finds</b> structure; it does not <b>interpret</b> it. Every atom still needs a person to read its documents and say what it means.</li>
+  <li>It is <b>lossy</b> by design. Compressing a whole literature into sixteen themes throws detail away on purpose.</li>
+  <li>A <b>small collection</b> yields fewer, broader atoms; a <b>very large single source</b> can dominate the map simply by contributing more text.</li>
+  <li>It reflects <b>the corpus it was given.</b> A gap in the map — a theme almost no atom carries — can mean the literature is thin there, which is itself worth knowing.</li>
+</ul>
+
+<div class="note">
+  <b>Provenance.</b> The method is the Discourse Atom Topic Model of Arseniev-Koehler &amp; Foster (2022): a word-embedding trained on the corpus (Word2Vec) followed by sparse dictionary learning (K-SVD) to recover the atoms. The map here was built on a curated set of 268 cognitive-science papers at K=16, with roughly six analogy × embodiment bridge atoms. The narrative reading of what those atoms mean for the analogy × tai-chi project lives in the <a href="./dossier.html">bridge dossier</a>.
+</div>
+</div>
+</body></html>

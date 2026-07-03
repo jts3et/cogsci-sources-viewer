@@ -1,0 +1,47 @@
+# The coordination model — reproducible fit
+
+Proof-of-concept fit of a Gaussian graphical model (GGM) of body coordination to
+real CMU motion-capture, backing the claims on the site's
+[Modelling](../modelling.html) tab.
+
+## What it tests
+
+Three premises the model rests on, checked against real human movement:
+
+- **(A) Dimensionality** — is real joint-angle covariance low-rank (a few synergies)?
+- **(B) Structure** — do the GGM partial correlations concentrate on *anatomically
+  adjacent* joints, i.e. does the precision matrix recover the kinematic tree the
+  model's graph-Laplacian is built from?
+- **(C) Task-dependence** — does the *sign* of limb coupling flip across tasks
+  (walk/run anti-phase → jump in-phase) at nearly fixed dimensionality? This is the
+  real-data proxy for "same collapse, different relational content."
+
+## Run it
+
+```bash
+bash fetch_cmu.sh      # downloads 6 .amc trials from mocap.cs.cmu.edu (~1 MB)
+python3 fit_ggm.py     # prints the results, writes fig_cmu_ggm.png
+```
+
+Requires `numpy` and `matplotlib`. The figure published on the Modelling tab lives at
+the repo root (`../fig_cmu_ggm.png`); re-running writes a fresh copy alongside the
+script.
+
+## What it reports (as of the committed run)
+
+| task | frames | PR(raw cov)/50 | PR(corr)/50 | anat. AUC |
+|------|-------:|---------------:|------------:|----------:|
+| walk | 645 | 2.74 | 4.78 | 0.798 |
+| run  | 278 | 2.98 | 5.05 | 0.712 |
+| jump | 854 | 2.65 | 4.96 | 0.817 |
+
+Signed limb coordination (matched flexion axis): legs L/R = −0.92 (walk), −0.89 (run),
+**+1.00 (jump)**; arms L/R = −0.95, −0.85, **+0.93**. Same ~5 effective DOF, opposite sign.
+
+## Notes / limits
+
+- `fit_ggm.py` is self-contained (it re-implements PR, parsing, and the topology); it
+  does **not** import the group's core model files.
+- Sign is axis-convention dependent — only the *relative* sign structure is interpretable.
+- One subject, two trials per task — a proof of concept, not an estimate with error bars.
+- Data provenance: CMU Graphics Lab Motion Capture Database, mocap.cs.cmu.edu.

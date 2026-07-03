@@ -1,0 +1,5 @@
+# downloaded CMU data (fetch with fetch_cmu.sh) and the regenerated figure copy
+*.amc
+*.asf
+fig_cmu_ggm.png
+__pycache__/

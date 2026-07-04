@@ -45,3 +45,25 @@ Signed limb coordination (matched flexion axis): legs L/R = −0.92 (walk), −0
 - Sign is axis-convention dependent — only the *relative* sign structure is interpretable.
 - One subject, two trials per task — a proof of concept, not an estimate with error bars.
 - Data provenance: CMU Graphics Lab Motion Capture Database, mocap.cs.cmu.edu.
+
+## Step 1 — two-body convergence
+
+`two_body.py` runs the first step of the intended outcome: it shows that a
+metaphor drives two differently built bodies onto the same relative-phase
+coordination, where a joint-angle instruction cannot. No new data; it runs on
+the same model.
+
+```bash
+python3 two_body.py     # needs numpy, matplotlib, and taichi_model.py alongside
+```
+
+Result (as committed):
+
+- Teacher trained to an anti-phase (mirror) arm coordination, r_T = −0.69.
+- Two learners with different anatomy start in-phase (r = +0.61, +0.56), a gap of ~1.3.
+- Under the shared metaphor the gap closes to ~0.1 (learners reach r = −0.53, −0.71).
+- The joint-angle channel sets a mean pose and never touches J, so its gap stays ~1.27 at every strength.
+
+Figures: `../fig_two_body.png` (convergence curve) and `../fig_two_body_skeletons.png`
+(one joint-angle target reaches different places on different bodies; the metaphor
+imposes the same mirror coordination at every scale).

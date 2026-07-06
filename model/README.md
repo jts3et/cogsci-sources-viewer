@@ -85,20 +85,53 @@ bash fetch_umons.sh && python3 fit_umons.py   # downloads 153 MB, writes ../fig_
 Result (as committed):
 
 - **(A) Dimensionality** — all 13 techniques collapse 10 angles to ~4 effective
-  axes (median PR 3.85, range 2.2–5.4). The collapse holds on real tai-chi.
-- **(B) Coupling graph** — strongest expert edges are the leg chains
-  (hip–knee −0.53/−0.45) *and* the cross-body diagonals (hip–opposite-knee
-  −0.34/−0.33). The anatomical-tree AUC falls to 0.53 (vs ~0.8 on CMU) because
-  tai-chi's graph is *denser* than the tree, adding the cross-body and
-  hip–neck-axis couplings the tradition names.
-- **(C) Expertise** — per-performer lower-body coupling strength tracks judged
-  skill at Spearman ρ = +0.71 (n = 12, p = 0.01); effective dimensionality does
-  not track skill (ρ = +0.04). Experts bind the legs ~2× more tightly than
-  novices. Skill is a coupling on specific joints, not a lower dimension count.
+  axes (Kinect median PR 3.85). The collapse holds on real tai-chi.
+- **(B) Coupling graph (Kinect)** — noisy; recovers the anatomical tree only at
+  chance (AUC ~0.53). Read the clean version on the Qualisys markers instead
+  (`fit_qualisys.py`), where AUC is 0.72–0.78.
+- **(C) A Kinect-only finding that did NOT replicate** — on the 30 Hz Kinect,
+  per-performer lower-body coupling strength appeared to track skill at Spearman
+  ρ = +0.71. The high-resolution Qualisys markers **reverse** this (ρ = −0.51),
+  and the two sensors anti-correlate per-performer (r = −0.33). So it is a
+  sensor artifact, not a property of the movement. **See `fit_qualisys.py` for
+  the corrected result.** Effective dimensionality does not track skill on
+  either sensor.
 
-Figure `../fig_umons.png` (4 panels: per-technique PR; expert vs novice leg
-edges; coupling-vs-skill scatter; expert coupling matrix). Self-contained except
-for `numpy`/`scipy`/`matplotlib`; does not import the group's core model files.
+Self-contained except for `numpy`/`scipy`/`matplotlib`; does not import the
+group's core model files. Writes `umons_perP.npy` (per-performer summary the
+Qualisys figure overlays) and `fig_umons.png`.
+
+## Section 2 (continued) — the high-resolution check (Qualisys markers)
+
+`fit_qualisys.py` runs the same ten-angle fit on the optical marker capture from
+the *same sessions*: Qualisys, 68 markers on real anatomical landmarks, 179 Hz,
+hand-cleaned. Reads `Segmented_TSV.zip` directly (`bash fetch_qualisys.sh`,
+3.6 GB). Needs `pandas` in addition to `numpy`/`scipy`/`matplotlib`.
+
+```bash
+bash fetch_qualisys.sh && python3 fit_qualisys.py   # writes ../fig_qualisys.png
+```
+
+Why two instruments: the Kinect infers joints markerlessly; the Qualisys puts
+markers on bone. Running the fit on both separates movement from sensor.
+
+Result (as committed):
+
+- **(A) Collapse holds on both** — Qualisys per-clip PR ~2.7 of 10; Kinect ~3.85.
+- **(B) Clean graph** — partial-correlation graph recovers the anatomical tree at
+  AUC 0.72 (expert) / 0.78 (novice); strongest edges are the leg chains, plus a
+  cross-body arm diagonal (elbow ↔ opposite shoulder).
+- **(C) The real skill signal is timing, not amount** — bilateral arm
+  phase-locking (how steadily the two arms hold a fixed relative phase, 179 Hz)
+  tracks judged skill at Spearman ρ = +0.68 (p = 0.015, leave-one-out
+  [+0.61, +0.77]). The static leg-coupling of the Kinect reverses here. This is
+  the Haken–Kelso–Bunz order-parameter prediction: skill = a steadier relative
+  phase, visible only at high frame rate.
+
+Figure `../fig_qualisys.png` (4 panels: arm phase-locking vs skill; the
+two-sensor leg-coupling disagreement; dimensionality on both sensors; the
+Qualisys expert coupling matrix). Run `fit_umons.py` first so the cross-sensor
+panels can overlay the Kinect numbers from `umons_perP.npy`.
 
 ## Section 1(D) — measured relative phase
 

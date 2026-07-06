@@ -11,3 +11,8 @@ fig_frustration.png
 Segmented_Kinect/
 Segmented_Kinect.zip
 fig_umons.png
+
+Segmented_TSV/
+Segmented_TSV.zip
+fig_qualisys.png
+*.npy

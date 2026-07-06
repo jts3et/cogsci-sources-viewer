@@ -190,6 +190,13 @@ def main():
     nov = leg[[i for i,P in enumerate(Ps) if P>=10]].mean()
     print(f"   leg-coupling: expert mean {exp:.3f} vs novice mean {nov:.3f}  ({exp/nov:.1f}x)")
 
+    # per-performer Kinect summary, so fit_qualisys.py can draw the cross-sensor panels
+    prclip = {P: np.median([participation_ratio(np.corrcoef(x, rowvar=False)) for x in byP[P]])
+              for P in byP}
+    np.save(os.path.join(HERE, "umons_perP.npy"),
+            dict(P=list(sorted(byP)), skill=[SKILL[P] for P in sorted(byP)],
+                 leg=list(leg), pr=[prclip[P] for P in sorted(byP)]), allow_pickle=True)
+
     figure(byG, allpr, Re, Rn, skill, leg, Ps)
 
 

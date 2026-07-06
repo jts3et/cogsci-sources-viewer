@@ -74,6 +74,32 @@
 
 <h2>3. The formalism</h2>
 
+<h3>Notation</h3>
+<div class="tw"><table><thead><tr><th>Symbol</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><i>n</i></td><td>number of degrees of freedom, one per joint angle (<i>n</i> = 13 in v0)</td></tr>
+<tr><td><i>x</i> ∈ ℝ<sup>n</sup></td><td>state vector, each joint&#x2019;s angular deviation from a fixed neutral pose</td></tr>
+<tr><td><i>E</i>(<i>x</i>) = &frac12; <i>x</i><sup>⊤</sup><i>J</i>&#8202;<i>x</i></td><td>energy, the cost of a configuration</td></tr>
+<tr><td><i>J</i></td><td>precision matrix, the coupling structure; <i>J</i><sub>ij</sub> is the coupling between joints <i>i</i> and <i>j</i>, and its sign is the relation</td></tr>
+<tr><td><i>T</i></td><td>temperature, sets variability only</td></tr>
+<tr><td>&Sigma; = <i>T</i>&#8202;<i>J</i><sup>&minus;1</sup></td><td>covariance, how the joints co-vary; all of the movement&#x2019;s content lives here</td></tr>
+<tr><td><i>&gamma;</i></td><td>baseline per-joint stiffness (<i>&gamma;I</i>), keeps <i>J</i> positive-definite</td></tr>
+<tr><td><i>L</i> = <i>D</i> &minus; <i>W</i></td><td>weighted graph Laplacian; <i>D</i> the degree matrix, <i>W</i> the adjacency matrix</td></tr>
+<tr><td><i>L</i><sub>anatomy</sub>, <i>L</i><sub>metaphor</sub></td><td>the fixed anatomical scaffold, and the clique a metaphor binds</td></tr>
+<tr><td><i>&beta;</i></td><td>strength of the imposed metaphor</td></tr>
+<tr><td>&lambda;<sub>i</sub></td><td>eigenvalues of &Sigma; (the covariance spectrum)</td></tr>
+<tr><td>PR = (&sum;<sub>i</sub> &lambda;<sub>i</sub>)<sup>2</sup> / &sum;<sub>i</sub> &lambda;<sub>i</sub><sup>2</sup></td><td>participation ratio, the effective number of dimensions, in [1, <i>n</i>]</td></tr>
+<tr><td>&frac12; <i>w</i>&#8202;(<i>a&#8202;x</i><sub>i</sub> &minus; <i>b&#8202;x</i><sub>j</sub>)<sup>2</sup></td><td>one signed coupling term; <i>w</i> the weight, (<i>a</i>, <i>b</i>) the coefficients</td></tr>
+<tr><td>(1, +1) / (1, &minus;1) / (1, +<i>r</i>)</td><td>in-phase / anti-phase / fixed-ratio at gain <i>r</i></td></tr>
+<tr><td>&lambda; <span style="color:var(--muted)">(frustration)</span></td><td>conflict parameter; mixes in-phase <i>W</i>(1&minus;&lambda;) with anti-phase <i>W&lambda;</i>, and freezes at &lambda; = &frac12;</td></tr>
+<tr><td><i>c</i><sub>&plusmn;</sub> = (<i>x</i><sub>L</sub> &plusmn; <i>x</i><sub>R</sub>)/&radic;2</td><td>collective coordinates, the sum and difference modes of a limb pair</td></tr>
+<tr><td>&phi;</td><td>relative phase (order parameter); 0 in-phase, &pi; anti-phase; the sign of a coupling</td></tr>
+<tr><td><i>r</i></td><td>arm order parameter, the correlation of a left-arm and a right-arm summary DOF; +1 in-phase, &minus;1 anti-phase</td></tr>
+<tr><td>&minus;<i>J</i><sub>ij</sub> / &radic;(<i>J</i><sub>ii</sub> <i>J</i><sub>jj</sub>)</td><td>partial correlation, the graphical model&#x2019;s edge weight</td></tr>
+<tr><td>AUC</td><td>the separation of adjacent from non-adjacent partial correlations (0.5 chance, 1 perfect)</td></tr>
+</tbody></table></div>
+<p style="font-size:13.5px;color:var(--muted)">Two symbols carry two meanings. &lambda; denotes the covariance eigenvalues above and the conflict parameter in the frustration section, and <i>W</i> denotes the adjacency matrix in the Laplacian and a scalar coupling weight in the frustration section.</p>
+
 <h3>State and energy</h3>
 <p>Let <i>x</i> ∈ ℝ<sup>n</sup> denote the vector of joint-angle deviations from a fixed neutral pose, one number per DOF. A symmetric positive-definite <strong>precision matrix</strong> <i>J</i> assigns each configuration a cost, a quadratic energy.</p>
 <div class="eq"><i>E</i>(<i>x</i>) = <span style="margin:0 2px">&frac12;</span> <i>x</i><sup>⊤</sup><i>J</i>&#8202;<i>x</i></div>

@@ -68,6 +68,38 @@ Figures: `../fig_two_body.png` (convergence curve) and `../fig_two_body_skeleton
 (one joint-angle target reaches different places on different bodies; the metaphor
 imposes the same mirror coordination at every scale).
 
+## Section 2 — fit to real Taijiquan motion (UMONS-TAICHI)
+
+`fit_umons.py` runs the same fit on real Taijiquan, the movement this project is
+actually about. UMONS-TAICHI (Tits et al. 2018, Data in Brief,
+[10.1016/j.dib.2018.05.088](https://doi.org/10.1016/j.dib.2018.05.088);
+[Zenodo](https://zenodo.org/records/2784581), CC BY-NC-SA 4.0) is Kinect V2
+motion capture of 12 performers doing 13 techniques, with a 0–10 skill score per
+performer from three judges. Each frame becomes 10 joint angles; the fit runs on
+the 1,793 clips with ≥60 tracked frames.
+
+```bash
+bash fetch_umons.sh && python3 fit_umons.py   # downloads 153 MB, writes ../fig_umons.png
+```
+
+Result (as committed):
+
+- **(A) Dimensionality** — all 13 techniques collapse 10 angles to ~4 effective
+  axes (median PR 3.85, range 2.2–5.4). The collapse holds on real tai-chi.
+- **(B) Coupling graph** — strongest expert edges are the leg chains
+  (hip–knee −0.53/−0.45) *and* the cross-body diagonals (hip–opposite-knee
+  −0.34/−0.33). The anatomical-tree AUC falls to 0.53 (vs ~0.8 on CMU) because
+  tai-chi's graph is *denser* than the tree, adding the cross-body and
+  hip–neck-axis couplings the tradition names.
+- **(C) Expertise** — per-performer lower-body coupling strength tracks judged
+  skill at Spearman ρ = +0.71 (n = 12, p = 0.01); effective dimensionality does
+  not track skill (ρ = +0.04). Experts bind the legs ~2× more tightly than
+  novices. Skill is a coupling on specific joints, not a lower dimension count.
+
+Figure `../fig_umons.png` (4 panels: per-technique PR; expert vs novice leg
+edges; coupling-vs-skill scatter; expert coupling matrix). Self-contained except
+for `numpy`/`scipy`/`matplotlib`; does not import the group's core model files.
+
 ## Section 1(D) — measured relative phase
 
 `relative_phase.py` recovers the actual relative phase between paired limbs from

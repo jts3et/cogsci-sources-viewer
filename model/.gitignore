@@ -7,3 +7,7 @@ fig_two_body.png
 fig_two_body_skeletons.png
 fig_relative_phase.png
 fig_frustration.png
+# downloaded UMONS-TAICHI data (fetch with fetch_umons.sh) and the figure copy
+Segmented_Kinect/
+Segmented_Kinect.zip
+fig_umons.png

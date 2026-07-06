@@ -67,3 +67,25 @@ Result (as committed):
 Figures: `../fig_two_body.png` (convergence curve) and `../fig_two_body_skeletons.png`
 (one joint-angle target reaches different places on different bodies; the metaphor
 imposes the same mirror coordination at every scale).
+
+## Section 1(D) — measured relative phase
+
+`relative_phase.py` recovers the actual relative phase between paired limbs from
+the CMU time series with a Hilbert transform (needs `scipy`), not just the sign
+of coordination. Walk legs 181° and run legs 170° (anti-phase), jump legs 3°
+(in-phase), phase-locking 0.9–0.99. Figure `../fig_relative_phase.png`.
+
+```bash
+bash fetch_cmu.sh && python3 relative_phase.py
+```
+
+## Step 3 — frustration
+
+`frustration.py` sweeps the conflict between an in-phase and an anti-phase image
+on one arm pair. At conflict ½ the free coordinated mode's variance drops from
+1.88 to 0.28 and the arm correlation passes through 0.00: two images cancel
+rather than average. No new data. Figure `../fig_frustration.png`.
+
+```bash
+python3 frustration.py
+```

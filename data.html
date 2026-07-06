@@ -97,7 +97,7 @@
 <p>The participation ratio, defined in section 1, counts the effective dimensions a movement uses. Across all thirteen techniques the ten joint angles collapse onto about four effective axes, a median of 3.85, ranging from 2.2 for the most constrained technique to 5.4 for the freest. The collapse that the model assumes, and that the CMU fit found in walking and running, holds in real Taijiquan and holds in every technique.</p>
 
 <h3>(B) The coordination graph couples the legs, and couples across the body</h3>
-<p>The partial correlations, the edge weights of the graphical model from section 1(B), read out which joint angles move together once every other angle is held fixed. Pooled over the three experts, the strongest edges run down the legs and across them.</p>
+<p>The partial correlations, the edge weights of the graphical model from section 1(B), read out which joint angles move together once every other angle is held fixed, so that only the direct link between a given two remains. A value near zero means two angles vary independently. A value far from zero means they are coupled, and the sign records only the direction of that coupling, whether the two angles open together or one opens as the other closes. What matters for coordination is the strength, the distance from zero, so we read each edge from the size of the number and not its sign. Pooled over the three experts, the strongest edges run down the legs and across them.</p>
 <div class="tw"><table><thead><tr><th>coupling (expert pool)</th><th>partial correlation</th><th>along the anatomical tree?</th></tr></thead>
 <tbody>
 <tr><td>left hip / left knee</td><td class="num neg">&minus;0.53</td><td>yes, within-limb</td></tr>

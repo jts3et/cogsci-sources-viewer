@@ -23,26 +23,17 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from taichi_model import (
-    N, JOINTS, IDX, baseline_edges, laplacian, covariance,
-    participation_ratio, correlation_from_cov,
+    N, JOINTS, IDX, baseline_edges, covariance,
+    participation_ratio, correlation_from_cov, relational_precision,
 )
 
 INK, ACCENT, COOL, MUTE = "#1b2430", "#b3541e", "#2f6b7a", "#9aa0a6"
 TEAL, RUST = "#2f6b7a", "#b3541e"
 
 # --------------------------------------------------------------------------- #
-#  signed relational coupling -> precision  (inlined from signed_couplings)     #
+#  relational couplings -> precision.  relational_precision now lives in         #
+#  taichi_model as the single source; a term is (i, j, a, b, w): 1/2 w(a x_i - b x_j)^2. #
 # --------------------------------------------------------------------------- #
-# A relational term is (i, j, a, b, w): penalty 1/2 w (a x_i - b x_j)^2.
-
-def relational_precision(base_edges, base_w, terms=None, gamma=0.5):
-    J = gamma * np.eye(N) + laplacian(base_edges, base_w)
-    for (i, j, a, b, w) in (terms or []):
-        J[i, i] += w * a * a
-        J[j, j] += w * b * b
-        J[i, j] -= w * a * b
-        J[j, i] -= w * a * b
-    return J
 
 def cross_arm_terms(sign, w):
     """Couple the two arms limb-for-limb. sign=-1 mirror (anti-phase), +1 parallel."""

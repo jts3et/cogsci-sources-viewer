@@ -16,19 +16,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from taichi_model import N, IDX, baseline_edges, laplacian, covariance
+from taichi_model import N, IDX, baseline_edges, covariance, relational_precision
 
 INK, ACCENT, COOL, MUTE = "#1b2430", "#b3541e", "#2f6b7a", "#9aa0a6"
-
-
-def relational_precision(be, bw, terms, gamma=0.5):
-    J = gamma * np.eye(N) + laplacian(be, bw)
-    for (i, j, a, b, w) in terms:
-        J[i, i] += w * a * a
-        J[j, j] += w * b * b
-        J[i, j] -= w * a * b
-        J[j, i] -= w * a * b
-    return J
 
 
 PAIRS = [("L_shoulder", "R_shoulder"), ("L_elbow", "R_elbow"), ("L_wrist", "R_wrist")]

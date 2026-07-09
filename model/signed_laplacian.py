@@ -1,17 +1,20 @@
 """
-signed_laplacian.py -- the unification Cody pointed at.
+signed_laplacian.py -- the unification Cody pointed at, now the model's single source.
 
-The metaphor was split across two precision builders:
-  * taichi_model.precision_matrix : UNSIGNED clique Laplacian  (in-phase only)
-  * two_body.relational_precision : signed 1/2 w (a x_i - b x_j)^2  (the "Ising" bit)
+Two precision builders once disagreed in FORM while agreeing in content:
+  * a clique Laplacian for the metaphor, built in-phase only, and
+  * two_body's relational 1/2 w (a x_i - b x_j)^2 terms (the signed "Ising" bit).
 
-Both are ONE object: a SIGNED graph Laplacian with the absolute-degree
-(|W|) convention.  A metaphor is a set of SIGNED edges linking joint-communities:
+They are ONE object: a SIGNED graph Laplacian with the absolute-degree (|W|)
+convention, which now lives in taichi_model (signed_laplacian, precision_signed,
+and precision_matrix's metaphor_sign) as the single builder. A metaphor is a set of
+SIGNED edges linking joint-communities:
     edge weight  > 0  ->  in-phase  (ordinary Laplacian block  D - W)
     edge weight  < 0  ->  anti-phase (signless block           D + |W|)
     J = gamma*I + signed_laplacian(anatomy[+] + metaphor[signed]).
-No spin model imported; in/anti-phase is edge sign, frustration is signed-graph
-imbalance.
+This module rebuilds two_body's relational terms as signed edges and proves the two
+forms give an identical J. No spin model imported; in/anti-phase is edge sign,
+frustration is signed-graph imbalance.
 """
 import numpy as np
 import sys, os

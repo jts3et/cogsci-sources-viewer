@@ -78,6 +78,27 @@ def precision_matrix(base_edges, base_w, metaphor_edges=None, beta=0.0, gamma=0.
     return precision_signed(edges, gamma=gamma)
 
 
+def relational_precision(base_edges, base_w, terms=None, gamma=0.5, n=N):
+    """General signed-coupling precision, the superset precision_signed specializes.
+
+    A relational term (i, j, a, b, w) is the perfect-square penalty 1/2 w (a x_i - b x_j)^2,
+    adding w*a^2 and w*b^2 to the diagonal and -w*a*b off-diagonal. For |a| = |b| = 1 on
+    distinct pairs this equals precision_signed on scalar signed edges (a positive edge is
+    a = b, an anti-phase edge a = -b). Two forms it carries that a scalar signed_laplacian
+    cannot: a fixed ratio (a = 1, b = r) at gain r, and two couplings on the SAME pair,
+    whose absolute weights accumulate on the diagonal term by term (the frustration case)
+    instead of cancelling first. That per-term accumulation is the single source for
+    two_body.py and frustration.py.
+    """
+    J = gamma * np.eye(n) + laplacian(base_edges, base_w, n)
+    for (i, j, a, b, w) in (terms or []):
+        J[i, i] += w * a * a
+        J[j, j] += w * b * b
+        J[i, j] -= w * a * b
+        J[j, i] -= w * a * b
+    return J
+
+
 def covariance(J, T=1.0):
     return T * np.linalg.inv(J)
 

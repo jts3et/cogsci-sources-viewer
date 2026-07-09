@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16232E">
+<title>Analogy &amp; Tacit Knowledge — Companion</title>
+<style>
+  :root{
+    --ink:#16232E; --ink2:#1F3340; --paper:#F7F9F8; --card:#FFFFFF;
+    --jade:#0E7C66; --jade2:#15A38A; --river:#2E6E8E; --clay:#C0603A;
+    --text:#1D2B33; --mute:#5B6B72; --line:#DCE3E0;
+  }
+  *{box-sizing:border-box;-webkit-text-size-adjust:100%;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:17px; line-height:1.62;
+  }
+  .wrap{max-width:680px; margin:0 auto; padding:0 18px;}
+
+  /* header */
+  header{background:var(--ink); color:var(--paper); padding:26px 0 22px;}
+  header .kick{color:var(--jade2); font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; margin:0 0 8px;}
+  header h1{font-family:Georgia,"Times New Roman",serif; font-size:25px; line-height:1.2; margin:0 0 10px; font-weight:700;}
+  header p{color:#9FB2AC; font-size:14.5px; margin:0;}
+
+  /* sticky nav */
+  nav{position:sticky; top:0; z-index:20; background:rgba(22,35,46,.97); backdrop-filter:saturate(160%) blur(6px);
+      border-bottom:1px solid #2a3b47; -webkit-overflow-scrolling:touch;}
+  nav .wrap{display:flex; gap:4px; overflow-x:auto; padding:0 12px;}
+  nav a{flex:0 0 auto; color:#9FB2AC; text-decoration:none; font-size:14px; font-weight:600;
+        padding:13px 14px; min-height:44px; display:flex; align-items:center; white-space:nowrap; border-bottom:2px solid transparent;}
+  nav a:active{color:#fff;}
+
+  section{padding:30px 0 12px; scroll-margin-top:52px; border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;}
+  h2{font-family:Georgia,serif; font-size:22px; margin:0 0 4px; color:var(--ink);}
+  .sub{color:var(--mute); font-size:14px; margin:0 0 18px;}
+  h3{font-size:16px; margin:26px 0 6px; color:var(--jade);}
+  p{margin:0 0 14px;}
+  .lede{font-size:17.5px;}
+
+  /* equation blocks */
+  .eq{background:var(--ink); color:var(--paper); border-radius:12px; padding:16px 14px; margin:14px 0;
+      font-family:Georgia,serif; font-size:19px; text-align:center; overflow-x:auto; line-height:1.5;}
+  .eq .j{color:var(--jade2); font-weight:700;}
+  .eq small{font-size:.62em; color:#9FB2AC;}
+  .plain{border-left:3px solid var(--jade); background:#eef4f1; border-radius:0 8px 8px 0; padding:11px 14px; margin:14px 0; font-size:15px;}
+  .plain b{color:var(--jade);}
+
+  /* step list */
+  ol.steps{list-style:none; counter-reset:s; padding:0; margin:16px 0;}
+  ol.steps li{counter-increment:s; position:relative; background:var(--card); border:1px solid var(--line);
+              border-radius:12px; padding:14px 16px 14px 54px; margin:0 0 12px; box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  ol.steps li::before{content:counter(s); position:absolute; left:14px; top:14px; width:28px; height:28px; border-radius:50%;
+              background:var(--jade); color:#fff; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center;}
+  ol.steps b{color:var(--ink);}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:14px; background:#eef2f0; padding:1px 5px; border-radius:4px;}
+
+  /* two-tone dissociation */
+  .diss{display:flex; gap:10px; margin:16px 0;}
+  .diss .c{flex:1; border-radius:12px; padding:13px 14px; background:var(--card); border:1px solid var(--line);}
+  .diss .c.on{border-color:var(--jade); box-shadow:0 0 0 1px var(--jade) inset;}
+  .diss .lab{font-size:12px; font-weight:700; letter-spacing:.14em; margin:0 0 6px;}
+  .diss .c .lab{color:var(--mute);} .diss .c.on .lab{color:var(--jade);}
+  .diss h4{margin:0 0 3px; font-size:15px; color:var(--ink);}
+  .diss small{color:var(--mute); font-size:12.5px;}
+
+  /* figures */
+  figure{margin:20px 0; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px; box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  figure img{width:100%; height:auto; border-radius:6px; display:block;}
+  figcaption{font-size:13.5px; color:var(--mute); margin-top:9px; line-height:1.45;}
+  figcaption b{color:var(--text);}
+
+  /* glossary */
+  dl{margin:14px 0;}
+  dl div{padding:12px 0; border-bottom:1px solid var(--line);}
+  dt{font-weight:700; color:var(--jade); font-size:15.5px;}
+  dd{margin:2px 0 0; color:var(--text); font-size:15px;}
+
+  footer{background:var(--ink); color:#9FB2AC; font-size:13px; padding:24px 0 34px; margin-top:30px; text-align:center;}
+  footer a{color:var(--jade2);}
+  .tag{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+       color:#fff; background:var(--river); border-radius:20px; padding:3px 10px; margin-left:6px; vertical-align:middle;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="kick">DISI 2026 · Analogies &amp; Abstractions Group</p>
+    <h1>The role of analogy in the transmission of tacit knowledge</h1>
+    <p>Follow along: the formalism, the model, the figures, and the key terms — one signed graph Laplacian throughout.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#formalism">Formalism</a>
+    <a href="#model">Model</a>
+    <a href="#figures">Figures</a>
+    <a href="#glossary">Glossary</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= FORMALISM ================= -->
+<section id="formalism">
+  <h2>The formalism</h2>
+  <p class="sub">A body is a set of coupled joints. All the coordination lives in one matrix.</p>
+
+  <p class="lede">A pose is a vector of joint angles <b>x ∈ ℝⁿ</b>. The body’s coordination is an energy, and comfortable postures are more likely:</p>
+  <div class="eq">E(x) = ½ x<sup>T</sup><span class="j">J</span>x &nbsp;&nbsp; p(x) ∝ e<small>−E/T</small> &nbsp; ⇒ &nbsp; x ~ 𝒩(0, Σ),&nbsp; Σ = T <span class="j">J</span><sup>−1</sup></div>
+  <div class="plain"><b>In plain terms:</b> lower-effort postures are more likely, so movements scatter in a bell-shaped cloud whose shape is set entirely by one table of numbers, <b>J</b> (the inverse of the covariance).</div>
+
+  <h3>One object: a signed graph Laplacian</h3>
+  <p><b>J</b> splits three ways, and all three are the same kind of object — a signed graph Laplacian:</p>
+  <div class="eq"><span class="j">J</span> = γI + L<sub>anatomy</sub> + β·L<sub>metaphor</sub> = γI + L(anatomy⁺ ∪ β·metaphor±)</div>
+  <p>For a signed, weighted edge set <span class="mono">W</span>, the Laplacian is <b>L = D̄ − W</b> with the <b>absolute-degree diagonal</b> D̄<sub>ii</sub> = Σ<sub>j</sub>|W<sub>ij</sub>|. That absolute value is what keeps <b>J</b> positive-definite even when an edge is negative.</p>
+  <ul>
+    <li><b>γI</b> — a baseline stiffness; each joint resists moving on its own.</li>
+    <li><b>L<sub>anatomy</sub></b> — the kinematic tree: the bones, as positive edges.</li>
+    <li><b>β·L<sub>metaphor</sub></b> — the teaching image: signed edges linking limbs, β the dial.</li>
+  </ul>
+
+  <h3>Signs: from binding to relation</h3>
+  <p>A single teaching image is one coupling, <b>E = ½w(a·x<sub>i</sub> − b·x<sub>j</sub>)²</b>, and its perfect-square expansion <em>is</em> the Laplacian read with a sign: the <span class="mono">wa²/wb²</span> diagonal is D̄ and the <span class="mono">−wab</span> off-diagonal is −W. Summing the squares over anatomy + metaphor rebuilds the one signed Laplacian — signs are not a second mechanism bolted on.</p>
+  <div class="diss">
+    <div class="c"><p class="lab">POSITIVE EDGE</p><h4 style="color:var(--jade)">in-phase</h4><small>ordinary block D̄ − W · joints move together (0°)</small></div>
+    <div class="c"><p class="lab">NEGATIVE EDGE</p><h4 style="color:var(--clay)">anti-phase</h4><small>signless block D̄ + |W| · joints mirror (180°)</small></div>
+  </div>
+  <p style="font-size:14.5px;color:var(--mute)">Off-diagonal <b>J &lt; 0</b> is in-phase; <b>J &gt; 0</b> is anti-phase. Fixed ratio (1, r) is the same perfect square at unequal coefficients. One builder — no spin model imported.</p>
+
+  <h3>The inverse: recover and decompose <span class="tag">how it’s coded</span></h3>
+  <p>Given real motion-capture, the model runs backward — it reads the couplings out of the movement, then splits them by graph support.</p>
+  <ol class="steps">
+    <li><b>Recover.</b> Take the empirical covariance Σ̂ of the joint angles across frames and invert it: <span class="mono">Ĵ = Σ̂⁻¹</span>. The couplings come from the data, nothing assumed.</li>
+    <li><b>Decompose.</b> On each bone edge, the anatomical weight is the recovered partial coupling, <span class="mono">w_anat = −Ĵ[i,j]</span>; build <span class="mono">L_anat</span> from those, then <span class="mono">M = Ĵ − L_anat</span>. M vanishes on the tree and carries the metaphor off-tree.</li>
+    <li><b>Read.</b> The sign of each off-tree entry is the relation: <span class="mono">M[i,j] &lt; 0</span> in-phase, <span class="mono">&gt; 0</span> anti-phase — limb to limb.</li>
+  </ol>
+  <div class="plain"><b>Verified:</b> on synthetic data a planted metaphor comes back exactly (Ĵ recovered to 1e-9), the tree-edge residual is 0, and M’s sign flips with the task.</div>
+</section>
+
+<!-- ================= MODEL ================= -->
+<section id="model">
+  <h2>The model</h2>
+  <p class="sub">What the analogy actually does — and what it does not.</p>
+
+  <h3>The claim</h3>
+  <p class="lede"><b>With one constraint, an analogy sets which coordination the body takes</b> — not how compressed the motion is, but which pattern it falls into.</p>
+  <div class="diss">
+    <div class="c"><p class="lab">NOT</p><h4>how compressed the motion is</h4><small>dimensionality — it stays fixed</small></div>
+    <div class="c on"><p class="lab">BUT</p><h4>which coordination it takes</h4><small>the pattern — it flips with the task</small></div>
+  </div>
+  <p>Two differently built bodies fall into the <b>same coordination</b>, each reaching it through its own joints. That settled pattern is the <em>order parameter</em> (Haken, Kelso &amp; Bunz, 1985).</p>
+
+  <h3>The teaching image is a signed edge</h3>
+  <figure>
+    <img src="fig_joint_graph.png" alt="Body drawn as a graph: 13 joints, bone edges, and a signed metaphor edge between the wrists, shown in-phase and anti-phase.">
+    <figcaption><b>Joints are dots; bones are the blue edges.</b> A teaching image adds one more edge between limbs — a “+” link (green) asks them to move together, a “−” link (clay) asks them to mirror. Nothing about your particular limb lengths changes the link.</figcaption>
+  </figure>
+
+  <h3>Frustration</h3>
+  <p>Give the body two images that fight — one “together,” one “mirror” — at strengths W(1−λ) and Wλ. At <b>λ = ½</b> they cancel, the shared coupling J<sub>ij</sub> → 0, and coordination freezes rather than averaging. So the order and compatibility of teaching images should matter for learning.</p>
+</section>
+
+<!-- ================= FIGURES ================= -->
+<section id="figures">
+  <h2>Figures</h2>
+  <p class="sub">Synthetic demonstrations and fits to real motion capture.</p>
+
+  <figure>
+    <img src="fig_two_body.png" alt="Two learners of different anatomy converge to the teacher's relative phase under a shared metaphor.">
+    <figcaption><b>The image aligns bodies; copying angles doesn’t.</b> Teacher at anti-phase; two learners of different anatomy start in-phase. Under a shared metaphor the order-parameter gap closes 1.27 → 0.09 as β ramps; a joint-angle instruction never touches J and stays flat. Synthetic.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="fig_frustration.png" alt="At conflict one-half the coordinated mode's variance collapses and the arm correlation passes through zero.">
+    <figcaption><b>Conflicting images freeze the movement.</b> At λ = ½ the coordinated mode’s variance drops 1.88 → 0.28 and the arm correlation passes through zero. Two images cancel rather than average.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="fig_cmu_ggm.png" alt="Joint correlation structure by task on real CMU motion capture.">
+    <figcaption><b>Real CMU motion capture (walk / run / jump).</b> Movement is low-dimensional (covariance PR ≈ 3 of 50) and direct couplings follow the skeleton (AUC 0.69–0.82). The limb-coupling sign flips across tasks at nearly fixed dimensionality.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="fig_relative_phase.png" alt="Measured relative phase between paired limbs by task, from a Hilbert transform.">
+    <figcaption><b>Measured relative phase (Hilbert transform).</b> Walking and running lock near 180° (anti-phase); jumping sits near 0° (in-phase). The relation, not the compression, is what changes with the task.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="fig_qualisys.png" alt="High-resolution Qualisys marker fit on real Taijiquan: skill tracks steadiness, not coupling.">
+    <figcaption><b>Real Taijiquan, high-resolution markers.</b> Skill is steadiness: bilateral arm phase-locking tracks judged skill (ρ = +0.68). A static coupling effect on the Kinect reverses here — a sensor artefact, not the movement.</figcaption>
+  </figure>
+</section>
+
+<!-- ================= GLOSSARY ================= -->
+<section id="glossary">
+  <h2>Key terms</h2>
+  <p class="sub">In plain language.</p>
+  <dl>
+    <div><dt>Degrees of freedom</dt><dd>the independent ways the body can move.</dd></div>
+    <div><dt>Synergy</dt><dd>many joints yoked to move as one.</dd></div>
+    <div><dt>Covariance</dt><dd>how much two joints move together.</dd></div>
+    <div><dt>Precision matrix (J)</dt><dd>the inverse of covariance; which joints are directly coupled.</dd></div>
+    <div><dt>Graph Laplacian</dt><dd>turns a network of couplings into an energy that scores how much connected joints disagree.</dd></div>
+    <div><dt>Signed edge</dt><dd>a coupling that is “+” (move together) or “−” (mirror).</dd></div>
+    <div><dt>In-phase / anti-phase</dt><dd>moving together (0°) versus opposing (180°).</dd></div>
+    <div><dt>Order parameter</dt><dd>one number for the whole coordination pattern.</dd></div>
+    <div><dt>Participation ratio (PR)</dt><dd>the effective number of independent directions the motion uses, (Σλ)²/Σλ².</dd></div>
+    <div><dt>Partial correlation</dt><dd>two joints’ coupling with all others held fixed.</dd></div>
+    <div><dt>Relative phase / phase-locking</dt><dd>where two limbs are in their cycle; how steadily they hold it.</dd></div>
+    <div><dt>Frustration</dt><dd>two conflicting images cancel, freezing the motion.</dd></div>
+    <div><dt>AUC</dt><dd>a 0.5–1 score: 0.5 = chance, 1 = perfect recovery.</dd></div>
+    <div><dt>Positive-definite</dt><dd>a stability condition: the energy has one clear bottom.</dd></div>
+  </dl>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    The “Analogies &amp; Abstractions” Group · DISI 2026<br>
+    Model &amp; data: <a href="modelling.html">the formalism page</a> · one signed graph Laplacian, edge signs carry the relation.
+  </div>
+</footer>
+
+</body>
+</html>

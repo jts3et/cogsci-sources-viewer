@@ -39,22 +39,43 @@ METAPHORS = {
 }
 
 
-def laplacian(edges, weights, n=N):
+def signed_laplacian(edges, n=N):
+    """The one precision object. edges: iterable of (i, j, w) with SIGNED w.
+
+    Absolute-degree (|W|) diagonal, D̄ = diag(Σⱼ|Wᵢⱼ|), keeps J = γI + (D̄ − W)
+    positive-definite even when an edge is negative. A positive edge gives the
+    ordinary Laplacian block (in-phase); a negative edge the signless block D̄ + |W|
+    (anti-phase). Anatomy and metaphor are the same object on disjoint supports.
+    """
     W = np.zeros((n, n))
-    for (a, b), w in zip(edges, weights):
-        W[a, b] += w
-        W[b, a] += w
-    D = np.diag(W.sum(axis=1))
-    return D - W
+    for (i, j, w) in edges:
+        W[i, j] += w
+        W[j, i] += w
+    Dbar = np.diag(np.abs(W).sum(axis=1))
+    return Dbar - W
 
 
-def precision_matrix(base_edges, base_w, metaphor_edges=None, beta=0.0, gamma=0.5):
-    L = laplacian(base_edges, base_w)
+def precision_signed(edges, gamma=0.5, n=N):
+    return gamma * np.eye(n) + signed_laplacian(edges, n)
+
+
+def laplacian(edges, weights, n=N):
+    """Back-compatible wrapper: a Laplacian from parallel (edge, weight) lists.
+    Now built through the signed builder; identical for non-negative weights."""
+    return signed_laplacian([(a, b, w) for (a, b), w in zip(edges, weights)], n)
+
+
+def precision_matrix(base_edges, base_w, metaphor_edges=None, beta=0.0, gamma=0.5,
+                     metaphor_sign=+1):
+    """Single precision builder: J = γI + signed_laplacian(anatomy[+] ∪ β·metaphor[signed]).
+
+    metaphor_sign = +1 in-phase (a clique that agrees), −1 anti-phase (mirror).
+    For the default in-phase case this reproduces the old clique-Laplacian exactly.
+    """
+    edges = [(a, b, w) for (a, b), w in zip(base_edges, base_w)]
     if metaphor_edges is not None and beta > 0:
-        Lm = laplacian(metaphor_edges, [1.0] * len(metaphor_edges))
-        L = L + beta * Lm
-    J = gamma * np.eye(N) + L
-    return J
+        edges += [(a, b, metaphor_sign * beta) for (a, b) in metaphor_edges]
+    return precision_signed(edges, gamma=gamma)
 
 
 def covariance(J, T=1.0):

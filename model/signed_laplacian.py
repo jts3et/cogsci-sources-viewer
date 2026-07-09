@@ -16,18 +16,8 @@ imbalance.
 import numpy as np
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from taichi_model import N, IDX, baseline_edges
-
-def signed_laplacian(edges, n=N):
-    """edges: iterable of (i, j, w), w SIGNED. Absolute-degree convention -> PSD."""
-    W = np.zeros((n, n))
-    for (i, j, w) in edges:
-        W[i, j] += w; W[j, i] += w
-    Dbar = np.diag(np.abs(W).sum(axis=1))
-    return Dbar - W
-
-def precision_signed(edges, gamma=0.5, n=N):
-    return gamma * np.eye(n) + signed_laplacian(edges, n)
+# The builder now lives in taichi_model as the single source; re-exported here.
+from taichi_model import N, IDX, baseline_edges, signed_laplacian, precision_signed
 
 # ---- rebuild the two_body relational terms as SIGNED EDGES ------------------ #
 def tree_edges(w_base):

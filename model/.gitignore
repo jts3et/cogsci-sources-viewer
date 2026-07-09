@@ -17,3 +17,13 @@ Segmented_TSV.zip
 fig_qualisys.png
 *.npy
 fig_joint_graph.png
+
+# --- committed data/ folder: track the small inputs + the figure archive, but
+# --- keep the oversized Zenodo downloads out (they exceed GitHub's 100MB limit).
+!data/cmu/*.amc
+!data/figures/*.png
+data/Segmented_Kinect/
+data/Segmented_Kinect.zip
+data/Segmented_TSV/
+data/Segmented_TSV.zip
+data/*.npy

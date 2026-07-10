@@ -15,7 +15,7 @@
   html{scroll-behavior:smooth;}
   body{
     margin:0; background:var(--paper); color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-family:Cambria,"Palatino Linotype","Book Antiqua",Georgia,"Times New Roman",serif;
     font-size:17px; line-height:1.62;
   }
   .wrap{max-width:680px; margin:0 auto; padding:0 18px;}
@@ -23,7 +23,7 @@
   /* header */
   header{background:var(--ink); color:var(--paper); padding:26px 0 22px;}
   header .kick{color:var(--jade2); font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; margin:0 0 8px;}
-  header h1{font-family:Georgia,"Times New Roman",serif; font-size:25px; line-height:1.2; margin:0 0 10px; font-weight:700;}
+  header h1{font-family:Cambria,Georgia,"Times New Roman",serif; font-size:25px; line-height:1.2; margin:0 0 10px; font-weight:700;}
   header p{color:#9FB2AC; font-size:14.5px; margin:0;}
 
   /* sticky nav */
@@ -36,7 +36,7 @@
 
   section{padding:30px 0 12px; scroll-margin-top:52px; border-top:1px solid var(--line);}
   section:first-of-type{border-top:none;}
-  h2{font-family:Georgia,serif; font-size:22px; margin:0 0 4px; color:var(--ink);}
+  h2{font-family:Cambria,Georgia,serif; font-size:22px; margin:0 0 4px; color:var(--ink);}
   .sub{color:var(--mute); font-size:14px; margin:0 0 18px;}
   h3{font-size:16px; margin:26px 0 6px; color:var(--jade);}
   p{margin:0 0 14px;}
@@ -47,6 +47,9 @@
       font-family:Georgia,serif; font-size:19px; text-align:center; overflow-x:auto; line-height:1.5;}
   .eq .j{color:var(--jade2); font-weight:700;}
   .eq small{font-size:.62em; color:#9FB2AC;}
+  .eq .katex-display{margin:0;}
+  .eq .katex{color:var(--paper);}
+  .katex{font-size:1.05em;}
   .plain{border-left:3px solid var(--jade); background:#eef4f1; border-radius:0 8px 8px 0; padding:11px 14px; margin:14px 0; font-size:15px;}
   .plain b{color:var(--jade);}
 
@@ -85,6 +88,7 @@
   .tag{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
        color:#fff; background:var(--river); border-radius:20px; padding:3px 10px; margin-left:6px; vertical-align:middle;}
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 </head>
 <body>
 
@@ -112,41 +116,41 @@
   <h2>The formalism</h2>
   <p class="sub">A body is a set of coupled joints. All the coordination lives in one matrix.</p>
 
-  <p class="lede">A pose is a vector of joint angles <b>x ∈ ℝⁿ</b>. The body’s coordination is an energy, and comfortable postures are more likely:</p>
-  <div class="eq">E(x) = ½ x<sup>T</sup><span class="j">J</span>x &nbsp;&nbsp; p(x) ∝ e<small>−E/T</small> &nbsp; ⇒ &nbsp; x ~ 𝒩(0, Σ),&nbsp; Σ = T <span class="j">J</span><sup>−1</sup></div>
+  <p class="lede">A pose is a vector of joint angles $x \in \mathbb{R}^{n}$. The body’s coordination is an energy, and comfortable postures are more likely:</p>
+  <div class="eq">$$E(x)=\tfrac{1}{2}\,x^{\top}\J x \qquad p(x)\propto e^{-E/T}\ \Rightarrow\ x\sim\mathcal{N}(0,\Sigma),\quad \Sigma=T\,\J^{-1}$$</div>
   <div class="plain"><b>In plain terms:</b> lower-effort postures are more likely, so movements scatter in a bell-shaped cloud whose shape is set entirely by one table of numbers, <b>J</b> (the inverse of the covariance).</div>
 
   <h3>One object: a signed graph Laplacian</h3>
   <p><b>J</b> splits three ways, and all three are the same kind of object — a signed graph Laplacian:</p>
-  <div class="eq"><span class="j">J</span> = γI + L<sub>anatomy</sub> + β·L<sub>metaphor</sub> = γI + L(anatomy⁺ ∪ β·metaphor±)</div>
-  <p>For a signed, weighted edge set <span class="mono">W</span>, the Laplacian is <b>L = D̄ − W</b> with the <b>absolute-degree diagonal</b> D̄<sub>ii</sub> = Σ<sub>j</sub>|W<sub>ij</sub>|. That absolute value is what keeps <b>J</b> positive-definite even when an edge is negative.</p>
+  <div class="eq">$$\J=\gamma I+L_{\mathrm{anatomy}}+\beta\,L_{\mathrm{metaphor}}=\gamma I+L\!\left(\mathrm{anatomy}^{+}\cup\ \beta\,\mathrm{metaphor}^{\pm}\right)$$</div>
+  <p>For a signed, weighted edge set $W$, the Laplacian is $L=\bar{D}-W$ with the <b>absolute-degree diagonal</b> $\bar{D}_{ii}=\sum_{j}\lvert W_{ij}\rvert$. That absolute value is what keeps <b>J</b> positive-definite even when an edge is negative.</p>
   <ul>
-    <li><b>γI</b> — a baseline stiffness; each joint resists moving on its own.</li>
-    <li><b>L<sub>anatomy</sub></b> — the kinematic tree: the bones, as positive edges.</li>
-    <li><b>β·L<sub>metaphor</sub></b> — the teaching image: signed edges linking limbs, β the dial.</li>
+    <li>$\gamma I$ — a baseline stiffness; each joint resists moving on its own.</li>
+    <li>$L_{\mathrm{anatomy}}$ — the kinematic tree: the bones, as positive edges.</li>
+    <li>$\beta\,L_{\mathrm{metaphor}}$ — the teaching image: signed edges linking limbs, $\beta$ the dial.</li>
   </ul>
 
   <h3>How compressed the motion is</h3>
-  <p>The covariance Σ carries one variance λ<sub>i</sub> per independent direction of movement. The <b>participation ratio</b> turns that spectrum into a count of the directions actually in play:</p>
-  <div class="eq">PR(Σ) = (Σ<sub>i</sub> λ<sub>i</sub>)<sup>2</sup> ∕ Σ<sub>i</sub> λ<sub>i</sub><sup>2</sup> &nbsp; <small>∈ [1, n]</small></div>
-  <div class="plain"><b>In plain terms:</b> PR = n means every joint does its own thing; PR → 1 means the whole body rides a single synergy. And since Σ = T·<b>J</b><sup>−1</sup> scales <em>every</em> λ<sub>i</sub> by the same T, <b>temperature cannot change PR</b> — dimensionality lives in <b>J</b>, variability lives in T. A metaphor compresses the motion; practice only tightens its spread.</div>
+  <p>The covariance $\Sigma$ carries one variance $\lambda_{i}$ per independent direction of movement. The <b>participation ratio</b> turns that spectrum into a count of the directions actually in play:</p>
+  <div class="eq">$$\operatorname{PR}(\Sigma)=\frac{\left(\sum_{i}\lambda_{i}\right)^{2}}{\sum_{i}\lambda_{i}^{2}}\ \in\ [1,\,n]$$</div>
+  <div class="plain"><b>In plain terms:</b> $\mathrm{PR}=n$ means every joint does its own thing; $\mathrm{PR}\to 1$ means the whole body rides a single synergy. And since $\Sigma=T\,J^{-1}$ scales <em>every</em> $\lambda_{i}$ by the same $T$, <b>temperature cannot change PR</b> — dimensionality lives in <b>J</b>, variability lives in $T$. A metaphor compresses the motion; practice only tightens its spread.</div>
 
   <h3>Signs: from binding to relation</h3>
-  <p>A single teaching image is one coupling, <b>E = ½w(a·x<sub>i</sub> − b·x<sub>j</sub>)²</b>, and its perfect-square expansion <em>is</em> the Laplacian read with a sign: the <span class="mono">wa²/wb²</span> diagonal is D̄ and the <span class="mono">−wab</span> off-diagonal is −W. Summing the squares over anatomy + metaphor rebuilds the one signed Laplacian — signs are not a second mechanism bolted on.</p>
+  <p>A single teaching image is one coupling, $E=\tfrac{1}{2}\,w\,(a\,x_{i}-b\,x_{j})^{2}$, and its perfect-square expansion <em>is</em> the Laplacian read with a sign: the $w a^{2},\ w b^{2}$ diagonal is $\bar{D}$ and the $-w a b$ off-diagonal is $-W$. Summing the squares over anatomy + metaphor rebuilds the one signed Laplacian — signs are not a second mechanism bolted on.</p>
   <div class="diss">
-    <div class="c"><p class="lab">POSITIVE EDGE</p><h4 style="color:var(--jade)">in-phase</h4><small>ordinary block D̄ − W · joints move together (0°)</small></div>
-    <div class="c"><p class="lab">NEGATIVE EDGE</p><h4 style="color:var(--clay)">anti-phase</h4><small>signless block D̄ + |W| · joints mirror (180°)</small></div>
+    <div class="c"><p class="lab">POSITIVE EDGE</p><h4 style="color:var(--jade)">in-phase</h4><small>ordinary block $\bar{D}-W$ · joints move together (0°)</small></div>
+    <div class="c"><p class="lab">NEGATIVE EDGE</p><h4 style="color:var(--clay)">anti-phase</h4><small>signless block $\bar{D}+\lvert W\rvert$ · joints mirror (180°)</small></div>
   </div>
-  <p style="font-size:14.5px;color:var(--mute)">Off-diagonal <b>J &lt; 0</b> is in-phase; <b>J &gt; 0</b> is anti-phase. Fixed ratio (1, r) is the same perfect square at unequal coefficients. One builder — no spin model imported.</p>
+  <p style="font-size:14.5px;color:var(--mute)">Off-diagonal $J &lt; 0$ is in-phase; $J &gt; 0$ is anti-phase. Fixed ratio $(1,r)$ is the same perfect square at unequal coefficients. One builder — no spin model imported.</p>
 
   <h3>The inverse: recover and decompose <span class="tag">how it’s coded</span></h3>
   <p>Given real motion-capture, the model runs backward — it reads the couplings out of the movement, then splits them by graph support.</p>
   <ol class="steps">
-    <li><b>Recover.</b> Take the empirical covariance Σ̂ of the joint angles across frames and invert it: <span class="mono">Ĵ = Σ̂⁻¹</span>. The couplings come from the data, nothing assumed.</li>
-    <li><b>Decompose.</b> On each bone edge, the anatomical weight is the recovered partial coupling, <span class="mono">w_anat = −Ĵ[i,j]</span>; build <span class="mono">L_anat</span> from those, then <span class="mono">M = Ĵ − L_anat</span>. M vanishes on the tree and carries the metaphor off-tree.</li>
-    <li><b>Read.</b> The sign of each off-tree entry is the relation: <span class="mono">M[i,j] &lt; 0</span> in-phase, <span class="mono">&gt; 0</span> anti-phase — limb to limb.</li>
+    <li><b>Recover.</b> Take the empirical covariance $\hat{\Sigma}$ of the joint angles across frames and invert it, $\hat{J}=\hat{\Sigma}^{-1}$. The couplings come from the data, nothing assumed.</li>
+    <li><b>Decompose.</b> On each bone edge, the anatomical weight is the recovered partial coupling, $w_{\mathrm{anat}}=-\hat{J}_{ij}$; build $L_{\mathrm{anat}}$ from those, then $M=\hat{J}-L_{\mathrm{anat}}$. $M$ vanishes on the tree and carries the metaphor off-tree.</li>
+    <li><b>Read.</b> The sign of each off-tree entry is the relation: $M_{ij} &lt; 0$ in-phase, $M_{ij} &gt; 0$ anti-phase — limb to limb.</li>
   </ol>
-  <div class="plain"><b>Verified:</b> on synthetic data a planted metaphor comes back exactly (Ĵ recovered to 1e-9), the tree-edge residual is 0, and M’s sign flips with the task.</div>
+  <div class="plain"><b>Verified:</b> on synthetic data a planted metaphor comes back exactly ($\hat{J}$ recovered to $10^{-9}$), the tree-edge residual is 0, and $M$’s sign flips with the task.</div>
 </section>
 
 <!-- ================= MODEL ================= -->
@@ -169,9 +173,9 @@
   </figure>
 
   <h3>Frustration</h3>
-  <p>Give the body two images that fight — one “together,” one “mirror” — at strengths W(1−λ) and Wλ on the same pair. The shared off-diagonal is their signed sum:</p>
-  <div class="eq"><span class="j">J</span><sub>ij</sub> = −W(1−λ) + Wλ = −W(1−2λ) <small>→ 0 at λ = ½, while both joints stiffen</small></div>
-  <p>At <b>λ = ½</b> the two demands are equal, the coupling passes through zero, and coordination <b>freezes</b> rather than averaging into a compromise. So the order and compatibility of teaching images should matter for learning.</p>
+  <p>Give the body two images that fight — one “together,” one “mirror” — at strengths $W(1-\lambda)$ and $W\lambda$ on the same pair. The shared off-diagonal is their signed sum:</p>
+  <div class="eq">$$\J_{ij}=-W(1-\lambda)+W\lambda=-W(1-2\lambda)$$</div>
+  <p>At $\lambda=\tfrac12$ the two demands are equal, the coupling passes through zero, and coordination <b>freezes</b> rather than averaging into a compromise. So the order and compatibility of teaching images should matter for learning.</p>
 </section>
 
 <!-- ================= FIGURES ================= -->
@@ -241,5 +245,14 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.body, {
+    delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],
+    macros: {"\\J":"\\textcolor{#15A38A}{J}"},
+    throwOnError: false
+  });
+</script>
 </body>
 </html>

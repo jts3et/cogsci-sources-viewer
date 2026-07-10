@@ -74,38 +74,38 @@ def fig_order_parameter():
 
 # --------------------------------------------------------------------------- #
 def fig_read_motion():
-    fig, ax = plt.subplots(figsize=(9.6, 4.9)); ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
+    fig, ax = plt.subplots(figsize=(9.8, 3.9)); ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
+    ax.text(1.5, 97, "How the order parameter is read from motion",
+            fontsize=14.5, fontweight="bold", color=INK, va="top", ha="left")
     steps = [
         ("DATA", r"$x_1(t),\ x_2(t)$", "limb flexion angles", "recorded by motion capture", RIVER),
-        ("PHASE", r"$\theta_i=\mathrm{arg}\,[x_i+i\,\mathcal{H}\{x_i\}]$", "each limb's phase", "detrended, then Hilbert", RIVER),
+        ("PHASE", r"$\theta_i=\mathrm{arg}[x_i+i\,\mathcal{H}\{x_i\}]$", "each limb's phase", "detrended, then Hilbert", RIVER),
         ("RELATIVE PHASE", r"$\varphi(t)=\theta_1(t)-\theta_2(t)$", "how the two are timed", "wrapped, instant by instant", JADE),
         ("ORDER PARAMETER", r"$\bar\varphi=\mathrm{arg}\,\langle e^{i\varphi}\rangle$", "a direction and a tightness", "averaged over the movement", JADE),
     ]
-    w, gap = 21.5, 3.0; x0 = 2.0; ytop, h = 52, 34
+    w, gap = 22.2, 2.6; x0 = 1.5; ytop, h = 52, 30
     for k, (head, eq, cap1, cap2, col) in enumerate(steps):
         x = x0 + k * (w + gap)
-        ax.add_patch(FancyBboxPatch((x, ytop), w, h, boxstyle="round,pad=0.6,rounding_size=2",
+        ax.add_patch(FancyBboxPatch((x, ytop), w, h, boxstyle="round,pad=0.5,rounding_size=2",
                                     fc="#FBFCFC", ec=LINE, lw=1.3))
-        ax.text(x + w / 2, ytop + h - 5, head, color=col, fontsize=10.5, fontweight="bold", ha="center")
-        ax.text(x + w / 2, ytop + h / 2 + 1, eq, color=INK, fontsize=12.5, ha="center", va="center")
-        ax.text(x + w / 2, ytop + 6.5, cap1, color=INK, fontsize=8.6, ha="center")
-        ax.text(x + w / 2, ytop + 2.8, cap2, color=MUTE, fontsize=7.8, ha="center", style="italic")
+        ax.text(x + w / 2, ytop + h - 4.5, head, color=col, fontsize=9.8, fontweight="bold", ha="center")
+        ax.text(x + w / 2, ytop + h / 2 + 0.5, eq, color=INK, fontsize=10.6, ha="center", va="center")
+        ax.text(x + w / 2, ytop + 5.4, cap1, color=INK, fontsize=8.3, ha="center")
+        ax.text(x + w / 2, ytop + 2.2, cap2, color=MUTE, fontsize=7.4, ha="center", style="italic")
         if k < 3:
-            ax.add_patch(FancyArrowPatch((x + w + 0.2, ytop + h / 2), (x + w + gap - 0.2, ytop + h / 2),
-                                         arrowstyle="-|>", mutation_scale=13, color=MUTE, lw=1.6))
-    # the second-line result
-    ax.text(50, 26, r"$\mathrm{PLV}=|\langle e^{i\varphi}\rangle|$: which pattern $\bar\varphi$, and how steady",
-            ha="center", fontsize=11, color=INK)
+            ax.add_patch(FancyArrowPatch((x + w + 0.1, ytop + h / 2), (x + w + gap - 0.1, ytop + h / 2),
+                                         arrowstyle="-|>", mutation_scale=12, color=MUTE, lw=1.5))
+    ax.plot([6, 94], [43, 43], color=LINE, lw=1)     # divider
+    ax.text(50, 35, r"$\mathrm{PLV}=|\langle e^{i\varphi}\rangle|$  —  which pattern $\bar\varphi$, and how steady",
+            ha="center", fontsize=11.5, color=INK)
     for cx, lab0, lab1, c0, c1 in [(27, "0°  in-phase", "180°  anti-phase", RIVER, CLAY),
                                    (73, "0  drifting", "1  tightly locked", MUTE, JADE)]:
-        ax.plot([cx - 17, cx + 17], [15, 15], color=LINE, lw=2.5, solid_capstyle="round")
-        ax.plot(cx - 17, 15, "o", color=c0, ms=8); ax.plot(cx + 17, 15, "o", color=c1, ms=8)
-        ax.text(cx - 17, 10.5, lab0, color=c0, fontsize=8.4, ha="center", fontweight="bold")
-        ax.text(cx + 17, 10.5, lab1, color=c1, fontsize=8.4, ha="center", fontweight="bold")
-    ax.text(50, 3, "on the tai-chi markers, the arms' phase-locking rises with judged skill  ·  "
+        ax.plot([cx - 16, cx + 16], [23, 23], color=LINE, lw=2.5, solid_capstyle="round")
+        ax.plot(cx - 16, 23, "o", color=c0, ms=8); ax.plot(cx + 16, 23, "o", color=c1, ms=8)
+        ax.text(cx - 16, 17, lab0, color=c0, fontsize=8.2, ha="center", fontweight="bold")
+        ax.text(cx + 16, 17, lab1, color=c1, fontsize=8.2, ha="center", fontweight="bold")
+    ax.text(50, 6, "on the tai-chi markers, the arms' phase-locking rises with judged skill  ·  "
                    r"Spearman $\rho=+0.68$", ha="center", fontsize=9, color=MUTE, style="italic")
-    fig.suptitle("How the order parameter is read from motion", fontsize=15, fontweight="bold",
-                 color=INK, x=0.02, ha="left", y=1.0)
     fig.savefig(os.path.join(HERE, "fig_read_motion.png"), dpi=130, bbox_inches="tight", facecolor=PAPER)
     plt.close(fig); print("wrote fig_read_motion.png")
 

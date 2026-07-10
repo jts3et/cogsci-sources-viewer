@@ -103,7 +103,7 @@
   <div class="wrap">
     <p class="kick">DISI 2026 · Analogies &amp; Abstractions Group</p>
     <h1>Metaphor and Tacit Knowledge Transmission</h1>
-    <p>Follow along: what a metaphor is, the formalism, the model, and the figures — one signed graph Laplacian throughout.</p>
+    <p>Follow along, from what a metaphor is through the formalism, the model, and the figures, one signed graph Laplacian throughout.</p>
   </div>
 </header>
 
@@ -145,90 +145,90 @@
   <h2>The formalism</h2>
   <p class="sub">A body is a set of coupled joints. All the coordination lives in one matrix.</p>
 
-  <p class="lede">A pose is a vector of joint angles $x \in \mathbb{R}^{n}$. The body’s coordination is an energy, and comfortable postures are more likely:</p>
+  <p class="lede">A pose is a vector of joint angles $x \in \mathbb{R}^{n}$. Each posture has an energy cost, so a lower-cost posture occurs more often.</p>
   <div class="eq">$$\begin{gathered} E(x)=\tfrac{1}{2}\,x^{\top}J x \qquad p(x)\propto e^{-E/T} \\[2pt] \Rightarrow\quad x\sim\mathcal{N}(0,\Sigma),\qquad \Sigma=T\,J^{-1} \end{gathered}$$</div>
-  <div class="plain"><b>In plain terms:</b> lower-effort postures are more likely, so movements scatter in a bell-shaped cloud whose shape is set entirely by one table of numbers, <b>J</b> (the inverse of the covariance).</div>
+  <div class="plain"><b>In plain terms.</b> Lower-cost postures occur more often, so movements scatter in a bell-shaped cloud. One table of numbers, <b>J</b>, the inverse of the covariance, sets its shape.</div>
 
   <h3>Anatomy and metaphor in one matrix</h3>
-  <p><b>J</b> splits three ways, and all three are signed graph Laplacians, so one construction carries the anatomy and the metaphor together.</p>
+  <p><b>J</b> splits three ways, each piece a signed graph Laplacian, so a single construction covers both the anatomy and the metaphor.</p>
   <div class="eq">$$\begin{gathered} J=\gamma I+L_{\mathrm{anatomy}}+\beta\,L_{\mathrm{metaphor}} \\[2pt] =\ \gamma I+L\!\left(\mathrm{anatomy}^{+}\cup\ \beta\,\mathrm{metaphor}^{\pm}\right) \end{gathered}$$</div>
-  <p>For a signed, weighted edge set $W$, the Laplacian is $L=\bar{D}-W$ with the <b>absolute-degree diagonal</b> $\bar{D}_{ii}=\sum_{j}\lvert W_{ij}\rvert$. That absolute value is what keeps <b>J</b> positive-definite even when an edge is negative.</p>
+  <p>For a signed, weighted edge set $W$, the Laplacian $L=\bar{D}-W$ uses the <b>absolute-degree diagonal</b> $\bar{D}_{ii}=\sum_{j}\lvert W_{ij}\rvert$. Counting the degree in absolute value keeps <b>J</b> positive-definite even when an edge is negative.</p>
   <ul>
-    <li>$\gamma I$ — a baseline stiffness; each joint resists moving on its own.</li>
-    <li>$L_{\mathrm{anatomy}}$ — the kinematic tree: the bones, as positive edges.</li>
-    <li>$\beta\,L_{\mathrm{metaphor}}$ — the teaching image: signed edges linking limbs, $\beta$ the dial.</li>
+    <li>$\gamma I$, a baseline stiffness, each joint resisting motion on its own.</li>
+    <li>$L_{\mathrm{anatomy}}$, the kinematic tree, the bones as positive edges.</li>
+    <li>$\beta\,L_{\mathrm{metaphor}}$, the teaching image, signed edges linking limbs, $\beta$ the dial.</li>
   </ul>
 
   <h3>How compressed the motion is</h3>
-  <p>The covariance $\Sigma$ carries one variance $\lambda_{i}$ per independent direction of movement. The <b>participation ratio</b> turns that spectrum into a count of the directions actually in play:</p>
+  <p>Each independent direction of movement has its own variance $\lambda_{i}$ in the covariance $\Sigma$. The <b>participation ratio</b> counts how many of those directions actually move.</p>
   <div class="eq">$$\operatorname{PR}(\Sigma)=\frac{\left(\sum_{i}\lambda_{i}\right)^{2}}{\sum_{i}\lambda_{i}^{2}}\ \in\ [1,\,n]$$</div>
-  <div class="plain"><b>In plain terms:</b> $\mathrm{PR}=n$ means every joint does its own thing; $\mathrm{PR}\to 1$ means the whole body rides a single synergy. And since $\Sigma=T\,J^{-1}$ scales <em>every</em> $\lambda_{i}$ by the same $T$, <b>temperature cannot change PR</b> — dimensionality lives in <b>J</b>, variability lives in $T$. A metaphor compresses the motion; practice only tightens its spread.</div>
+  <div class="plain"><b>In plain terms.</b> A participation ratio of $n$ means every joint moves on its own. Near 1, the whole body rides a single synergy. Since $\Sigma=T\,J^{-1}$ scales <em>every</em> $\lambda_{i}$ by the same $T$, temperature cannot change PR, so dimensionality lives in <b>J</b> and variability lives in $T$. Metaphor compresses the motion. Practice only tightens its spread.</div>
 
   <h3>What a coupling’s sign fixes</h3>
-  <p>A single teaching image is one coupling, $E=\tfrac{1}{2}\,w\,(a\,x_{i}-b\,x_{j})^{2}$, and its perfect-square expansion <em>is</em> the Laplacian read with a sign: the $w a^{2},\ w b^{2}$ diagonal is $\bar{D}$ and the $-w a b$ off-diagonal is $-W$. Summing the squares over anatomy + metaphor rebuilds the one signed Laplacian — signs are not a second mechanism bolted on.</p>
+  <p>A single teaching image is one coupling, $E=\tfrac{1}{2}\,w\,(a\,x_{i}-b\,x_{j})^{2}$. Its perfect-square expansion reproduces the Laplacian with a sign, the $w a^{2},\ w b^{2}$ diagonal giving $\bar{D}$ and the $-w a b$ off-diagonal giving $-W$. Summing these squares over anatomy and metaphor rebuilds the one signed Laplacian, so a sign is all a coupling adds to it.</p>
   <div class="diss">
     <div class="c"><p class="lab">POSITIVE EDGE</p><h4 style="color:var(--jade)">in-phase</h4><small>ordinary block $\bar{D}-W$ · joints move together (0°)</small></div>
     <div class="c"><p class="lab">NEGATIVE EDGE</p><h4 style="color:var(--clay)">anti-phase</h4><small>signless block $\bar{D}+\lvert W\rvert$ · joints mirror (180°)</small></div>
   </div>
-  <p style="color:var(--mute)">Off-diagonal $J &lt; 0$ is in-phase; $J &gt; 0$ is anti-phase. Fixed ratio $(1,r)$ is the same perfect square at unequal coefficients. One builder — no spin model imported.</p>
+  <p style="color:var(--mute)">Negative off-diagonals, $J &lt; 0$, read in-phase, positive ones anti-phase. The fixed ratio $(1,r)$ is the same perfect square at unequal coefficients. One builder, the signed Laplacian, does all of it.</p>
 
   <h3>Recovering the couplings from motion <span class="tag">how it’s coded</span></h3>
-  <p>Given real motion-capture, the model runs backward — it reads the couplings out of the movement, then splits them by graph support.</p>
+  <p>Given real motion-capture, the model runs backward, reading the couplings out of the movement, then splitting them by graph support.</p>
   <ol class="steps">
-    <li><b>Recover.</b> Take the empirical covariance $\hat{\Sigma}$ of the joint angles across frames and invert it, $\hat{J}=\hat{\Sigma}^{-1}$. The couplings come from the data, nothing assumed.</li>
-    <li><b>Decompose.</b> On each bone edge, the anatomical weight is the recovered partial coupling, $w_{\mathrm{anat}}=-\hat{J}_{ij}$; build $L_{\mathrm{anat}}$ from those, then $M=\hat{J}-L_{\mathrm{anat}}$. $M$ vanishes on the tree and carries the metaphor off-tree.</li>
-    <li><b>Read.</b> The sign of each off-tree entry is the relation: $M_{ij} &lt; 0$ in-phase, $M_{ij} &gt; 0$ anti-phase — limb to limb.</li>
+    <li><b>Recover.</b> Take the empirical covariance $\hat{\Sigma}$ of the joint angles across frames and invert it, $\hat{J}=\hat{\Sigma}^{-1}$. The couplings come straight from the data.</li>
+    <li><b>Decompose.</b> On each bone edge, the anatomical weight is the recovered partial coupling, $w_{\mathrm{anat}}=-\hat{J}_{ij}$; build $L_{\mathrm{anat}}$ from those, then $M=\hat{J}-L_{\mathrm{anat}}$. $M$ vanishes on the tree, its off-tree entries the metaphor.</li>
+    <li><b>Read.</b> The sign of each off-tree entry fixes the relation, $M_{ij} &lt; 0$ in-phase and $M_{ij} &gt; 0$ anti-phase, limb to limb.</li>
   </ol>
-  <div class="plain"><b>Verified:</b> on synthetic data a planted metaphor comes back exactly ($\hat{J}$ recovered to $10^{-9}$), the tree-edge residual is 0, and $M$’s sign flips with the task.</div>
+  <div class="plain"><b>Verified.</b> On synthetic data a planted metaphor comes back exactly ($\hat{J}$ recovered to $10^{-9}$), the tree-edge residual is 0, and $M$’s sign flips with the task.</div>
 </section>
 
 <!-- ================= MODEL ================= -->
 <section id="model">
   <h2>The model</h2>
-  <p class="sub">What the analogy actually does — and what it does not.</p>
+  <p class="sub">What one added constraint does to a body’s coordination.</p>
 
   <h3>What one constraint does</h3>
-  <p class="lede"><b>With one constraint, an analogy sets which coordination the body takes</b> — not how compressed the motion is, but which pattern it falls into.</p>
+  <p class="lede"><b>With one added constraint, an analogy sets which coordination the body takes.</b> The pattern the motion falls into changes. Its number of active dimensions stays fixed.</p>
   <div class="diss">
-    <div class="c"><p class="lab">NOT</p><h4>how compressed the motion is</h4><small>dimensionality — it stays fixed</small></div>
-    <div class="c on"><p class="lab">BUT</p><h4>which coordination it takes</h4><small>the pattern — it flips with the task</small></div>
+    <div class="c"><p class="lab">DIMENSIONALITY</p><h4>how compressed the motion is</h4><small>stays fixed under the metaphor</small></div>
+    <div class="c on"><p class="lab">PATTERN</p><h4>which coordination it takes</h4><small>flips with the task</small></div>
   </div>
-  <p>Two differently built bodies fall into the <b>same coordination</b>, each reaching it through its own joints. That settled pattern is the <em>order parameter</em> (Haken, Kelso &amp; Bunz, 1985).</p>
+  <p>Bodies built differently fall into the <b>same coordination</b>, each reaching it through its own joints. Haken, Kelso and Bunz (1985) call that settled pattern the <em>order parameter</em>.</p>
 
   <h3>The teaching image is a signed edge</h3>
   <figure>
     <img src="fig_joint_graph.png" alt="Body drawn as a graph: 13 joints, bone edges, and a signed metaphor edge between the wrists, shown in-phase and anti-phase.">
-    <figcaption><b>Joints are dots; bones are the blue edges.</b> A teaching image adds one more edge between limbs — a “+” link (green) asks them to move together, a “−” link (clay) asks them to mirror. Nothing about your particular limb lengths changes the link.</figcaption>
+    <figcaption><b>Joints are dots, bones the blue edges.</b> A teaching image adds one more edge between limbs, a “+” link (green) asking them to move together, a “−” link (clay) asking them to mirror. The link holds whatever your limb lengths.</figcaption>
   </figure>
 
   <h3>Frustration</h3>
-  <p>Give the body two images that fight — one “together,” one “mirror” — at strengths $W(1-\lambda)$ and $W\lambda$ on the same pair. The shared off-diagonal is their signed sum:</p>
+  <p>Two images that fight, one “together” at strength $W(1-\lambda)$ and one “mirror” at strength $W\lambda$, land on the same pair. Their signed sum becomes the shared off-diagonal.</p>
   <div class="eq">$$J_{ij}=-W(1-\lambda)+W\lambda=-W(1-2\lambda)$$</div>
-  <p>At $\lambda=\tfrac12$ the two demands are equal, the coupling passes through zero, and coordination <b>freezes</b> rather than averaging into a compromise. So the order and compatibility of teaching images should matter for learning.</p>
+  <p>At $\lambda=\tfrac12$ the two demands match, so the coupling passes through zero and the coordination <b>freezes</b> in place. The order and compatibility of teaching images should then matter for learning.</p>
 </section>
 
 <!-- ================= ORDER PARAMETER ================= -->
 <section id="order">
   <h2>The order parameter</h2>
-  <p class="sub">The one number the whole coordination settles into — and how it is read from real motion.</p>
+  <p class="sub">The one number the whole coordination settles into, and how it is read from real motion.</p>
 
   <figure>
     <img src="fig_order_parameter.png" alt="Two limbs with a relative-phase offset, and the HKB double-well potential with in-phase and anti-phase settled states.">
-    <figcaption><b>Where movement settles.</b> The whole coordination reduces to one collective variable, the relative phase $\varphi$ of the limbs. It settles into two stable patterns — in-phase (0°) and anti-phase (180°) — with a ridge between them.</figcaption>
+    <figcaption><b>Where movement settles.</b> The whole coordination reduces to one collective variable, the relative phase $\varphi$ of the limbs. It settles into two stable patterns, in-phase (0°) and anti-phase (180°), with a ridge between them.</figcaption>
   </figure>
 
   <figure>
     <img src="fig_read_motion.png" alt="Pipeline: limb angles to instantaneous phase (Hilbert) to relative phase to the order parameter, with which-pattern and how-steady sliders.">
-    <figcaption><b>Read from motion.</b> From the limb-angle time series a Hilbert transform gives each limb’s instantaneous phase; their difference is the relative phase; averaged as a unit vector it yields the order parameter — a direction (which pattern) and a tightness (the phase-locking value, how steady).</figcaption>
+    <figcaption><b>Read from motion.</b> A Hilbert transform turns each limb’s angle series into an instantaneous phase, their difference is the relative phase, and its unit-vector average is the order parameter, a direction (which pattern) and a tightness (the phase-locking value, how steady).</figcaption>
   </figure>
 
   <figure>
     <img src="fig_skill_scatter.png" alt="Scatter of bilateral arm phase-locking against judged skill for twelve tai-chi performers, rising along a dashed trend line.">
-    <figcaption><b>Skill is steadiness.</b> On real Taijiquan (12 performers, Qualisys markers) bilateral arm phase-locking rises with judged skill, Spearman $\rho = +0.68$ (p = 0.015). The <em>amount</em> of coupling does not track skill — the <em>steadiness</em> of the order parameter does.</figcaption>
+    <figcaption><b>Skill is steadiness.</b> On real Taijiquan (12 performers, Qualisys markers) bilateral arm phase-locking rises with judged skill, Spearman $\rho = +0.68$ (p = 0.015). Steadiness of the order parameter tracks skill; the amount of coupling stays flat.</figcaption>
   </figure>
 
   <h3>The values, per performer</h3>
-  <p class="sub">The arm order parameter is the bilateral phase-locking value (0 drifting → 1 locked) — how tightly the two arms hold their relative phase across a gesture, on the Qualisys markers at 179 Hz.</p>
+  <p class="sub">The arm order parameter is the bilateral phase-locking value (0 drifting → 1 locked), how tightly the two arms keep their relative phase across a gesture, on the Qualisys markers at 179 Hz.</p>
   <table class="head">
     <tr><th>Performer</th><th>Level</th><th>Skill</th><th>Arm PLV</th></tr>
     <tr><td>P04</td><td>advanced</td><td>8.1</td><td>0.840</td></tr>
@@ -244,7 +244,7 @@
     <tr><td>P09</td><td>intermediate</td><td>6.9</td><td>0.701</td></tr>
     <tr><td>P12</td><td>novice</td><td>5.9</td><td>0.671</td></tr>
   </table>
-  <p class="sub">Mean 0.75, range 0.67–0.84. Experts and advanced performers hold the steadier arm coordination; novices let it drift — the rank correlation with judged skill is ρ = +0.68.</p>
+  <p class="sub">Mean 0.75, range 0.67–0.84. Experts and advanced performers keep the steadier arm coordination; novices let it drift. The rank correlation with judged skill is ρ = +0.68.</p>
 </section>
 
 <!-- ================= FIGURES ================= -->
@@ -268,7 +268,7 @@
 
   <figure>
     <img src="fig_two_body_skeletons.png" alt="One joint-angle target on three differently sized bodies reaches different places; the mirror coordination the metaphor sets is the same relative phase in every body.">
-    <figcaption><b>Why an image travels and a joint-angle list doesn’t.</b> Left: one joint-angle target on three differently sized bodies — the segment lengths carry the arms to different places. Right: the mirror coordination the image sets — the same relative phase in every body, each at its own scale.</figcaption>
+    <figcaption><b>Why an image travels and a joint-angle list does not.</b> On the left, one joint-angle target on three differently sized bodies, the arms landing in different places as the segment lengths differ. On the right, the mirror coordination the image sets, the same relative phase in every body, each at its own scale.</figcaption>
   </figure>
 
   <figure>
@@ -288,7 +288,7 @@
 
   <figure>
     <img src="fig_qualisys.png" alt="High-resolution Qualisys marker fit on real Taijiquan: skill tracks steadiness, not coupling.">
-    <figcaption><b>Real Taijiquan, high-resolution markers.</b> Skill is steadiness: bilateral arm phase-locking tracks judged skill (ρ = +0.68). A static coupling effect on the Kinect reverses here — a sensor artefact, not the movement.</figcaption>
+    <figcaption><b>Real Taijiquan, high-resolution markers.</b> Bilateral arm phase-locking tracks judged skill (ρ = +0.68), so skill shows up as steadiness. A static coupling effect on the Kinect reverses here, marking a sensor artefact.</figcaption>
   </figure>
 </section>
 

@@ -27,3 +27,6 @@ data/Segmented_Kinect.zip
 data/Segmented_TSV/
 data/Segmented_TSV.zip
 data/*.npy
+fig_order_parameter.png
+fig_read_motion.png
+fig_skill_scatter.png

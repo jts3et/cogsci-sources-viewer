@@ -117,12 +117,12 @@
   <p class="sub">A body is a set of coupled joints. All the coordination lives in one matrix.</p>
 
   <p class="lede">A pose is a vector of joint angles $x \in \mathbb{R}^{n}$. The body’s coordination is an energy, and comfortable postures are more likely:</p>
-  <div class="eq">$$E(x)=\tfrac{1}{2}\,x^{\top}\J x \qquad p(x)\propto e^{-E/T}\ \Rightarrow\ x\sim\mathcal{N}(0,\Sigma),\quad \Sigma=T\,\J^{-1}$$</div>
+  <div class="eq">$$E(x)=\tfrac{1}{2}\,x^{\top}J x \qquad p(x)\propto e^{-E/T}\ \Rightarrow\ x\sim\mathcal{N}(0,\Sigma),\quad \Sigma=T\,J^{-1}$$</div>
   <div class="plain"><b>In plain terms:</b> lower-effort postures are more likely, so movements scatter in a bell-shaped cloud whose shape is set entirely by one table of numbers, <b>J</b> (the inverse of the covariance).</div>
 
   <h3>One object: a signed graph Laplacian</h3>
   <p><b>J</b> splits three ways, and all three are the same kind of object — a signed graph Laplacian:</p>
-  <div class="eq">$$\J=\gamma I+L_{\mathrm{anatomy}}+\beta\,L_{\mathrm{metaphor}}=\gamma I+L\!\left(\mathrm{anatomy}^{+}\cup\ \beta\,\mathrm{metaphor}^{\pm}\right)$$</div>
+  <div class="eq">$$J=\gamma I+L_{\mathrm{anatomy}}+\beta\,L_{\mathrm{metaphor}}=\gamma I+L\!\left(\mathrm{anatomy}^{+}\cup\ \beta\,\mathrm{metaphor}^{\pm}\right)$$</div>
   <p>For a signed, weighted edge set $W$, the Laplacian is $L=\bar{D}-W$ with the <b>absolute-degree diagonal</b> $\bar{D}_{ii}=\sum_{j}\lvert W_{ij}\rvert$. That absolute value is what keeps <b>J</b> positive-definite even when an edge is negative.</p>
   <ul>
     <li>$\gamma I$ — a baseline stiffness; each joint resists moving on its own.</li>
@@ -174,7 +174,7 @@
 
   <h3>Frustration</h3>
   <p>Give the body two images that fight — one “together,” one “mirror” — at strengths $W(1-\lambda)$ and $W\lambda$ on the same pair. The shared off-diagonal is their signed sum:</p>
-  <div class="eq">$$\J_{ij}=-W(1-\lambda)+W\lambda=-W(1-2\lambda)$$</div>
+  <div class="eq">$$J_{ij}=-W(1-\lambda)+W\lambda=-W(1-2\lambda)$$</div>
   <p>At $\lambda=\tfrac12$ the two demands are equal, the coupling passes through zero, and coordination <b>freezes</b> rather than averaging into a compromise. So the order and compatibility of teaching images should matter for learning.</p>
 </section>
 
@@ -250,7 +250,6 @@
 <script>
   renderMathInElement(document.body, {
     delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],
-    macros: {"\\J":"\\textcolor{#15A38A}{J}"},
     throwOnError: false
   });
 </script>

@@ -126,6 +126,11 @@
     <li><b>β·L<sub>metaphor</sub></b> — the teaching image: signed edges linking limbs, β the dial.</li>
   </ul>
 
+  <h3>How compressed the motion is</h3>
+  <p>The covariance Σ carries one variance λ<sub>i</sub> per independent direction of movement. The <b>participation ratio</b> turns that spectrum into a count of the directions actually in play:</p>
+  <div class="eq">PR(Σ) = (Σ<sub>i</sub> λ<sub>i</sub>)<sup>2</sup> ∕ Σ<sub>i</sub> λ<sub>i</sub><sup>2</sup> &nbsp; <small>∈ [1, n]</small></div>
+  <div class="plain"><b>In plain terms:</b> PR = n means every joint does its own thing; PR → 1 means the whole body rides a single synergy. And since Σ = T·<b>J</b><sup>−1</sup> scales <em>every</em> λ<sub>i</sub> by the same T, <b>temperature cannot change PR</b> — dimensionality lives in <b>J</b>, variability lives in T. A metaphor compresses the motion; practice only tightens its spread.</div>
+
   <h3>Signs: from binding to relation</h3>
   <p>A single teaching image is one coupling, <b>E = ½w(a·x<sub>i</sub> − b·x<sub>j</sub>)²</b>, and its perfect-square expansion <em>is</em> the Laplacian read with a sign: the <span class="mono">wa²/wb²</span> diagonal is D̄ and the <span class="mono">−wab</span> off-diagonal is −W. Summing the squares over anatomy + metaphor rebuilds the one signed Laplacian — signs are not a second mechanism bolted on.</p>
   <div class="diss">
@@ -164,7 +169,9 @@
   </figure>
 
   <h3>Frustration</h3>
-  <p>Give the body two images that fight — one “together,” one “mirror” — at strengths W(1−λ) and Wλ. At <b>λ = ½</b> they cancel, the shared coupling J<sub>ij</sub> → 0, and coordination freezes rather than averaging. So the order and compatibility of teaching images should matter for learning.</p>
+  <p>Give the body two images that fight — one “together,” one “mirror” — at strengths W(1−λ) and Wλ on the same pair. The shared off-diagonal is their signed sum:</p>
+  <div class="eq"><span class="j">J</span><sub>ij</sub> = −W(1−λ) + Wλ = −W(1−2λ) <small>→ 0 at λ = ½, while both joints stiffen</small></div>
+  <p>At <b>λ = ½</b> the two demands are equal, the coupling passes through zero, and coordination <b>freezes</b> rather than averaging into a compromise. So the order and compatibility of teaching images should matter for learning.</p>
 </section>
 
 <!-- ================= FIGURES ================= -->
